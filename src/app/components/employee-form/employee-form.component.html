@@ -1,0 +1,56 @@
+<div class="container">
+    <h2 class="mb-4">{{ isEditMode ? 'Edit' : 'Add' }} Employee</h2>
+
+    <div *ngIf="loading" class="text-center my-5">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2">{{ isEditMode ? 'Loading employee data...' : 'Processing...' }}</p>
+    </div>
+
+    <div *ngIf="error" class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" formControlName="name"
+                [ngClass]="{'is-invalid': submitted && f['name'].errors}">
+            <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                <div *ngIf="f['name'].errors['required']">Name is required</div>
+                <div *ngIf="f['name'].errors['maxlength']">Name cannot exceed 100 characters</div>
+                <div *ngIf="f['name'].errors['pattern']">Name can only contain letters and spaces</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" formControlName="email"
+                [ngClass]="{'is-invalid': submitted && f['email'].errors}">
+            <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                <div *ngIf="f['email'].errors['required']">Email is required</div>
+                <div *ngIf="f['email'].errors['email']">Please enter a valid email address</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="department" class="form-label">Department</label>
+            <select class="form-select" id="department" formControlName="department"
+                [ngClass]="{'is-invalid': submitted && f['department'].errors}">
+                <option value="">Select Department</option>
+                <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+            </select>
+            <div *ngIf="submitted && f['department'].errors" class="invalid-feedback">
+                <div *ngIf="f['department'].errors['required']">Department is required</div>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-primary" [disabled]="loading">
+                {{ isEditMode ? 'Update' : 'Submit' }}
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+        </div>
+    </form>
+</div>
