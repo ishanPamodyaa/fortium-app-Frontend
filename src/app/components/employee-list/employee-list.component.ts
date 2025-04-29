@@ -50,4 +50,17 @@ export class EmployeeListComponent implements OnInit {
       });
     }
   }
+
+  downloadCsv() {
+    this.employeeService.getCSVrepote().subscribe((data: Blob) => {
+      const blob = new Blob([data], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'employees.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
+  
 }

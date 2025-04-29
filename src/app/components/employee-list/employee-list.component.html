@@ -5,6 +5,12 @@
         <button class="btn btn-primary" routerLink="/employees/add">
             <i class="bi bi-plus-circle"></i> Add New Employee
         </button>
+        <button class="btn btn-success" (click)="downloadCsv()">
+            <i class="bi bi-file-earmark-arrow-down"></i> Export File 
+        </button>
+      
+
+
     </div>
 
     <div *ngIf="loading" class="text-center my-5">

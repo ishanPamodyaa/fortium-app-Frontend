@@ -51,4 +51,11 @@ export class EmployeeService {
   deleteEmployee(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  getCSVrepote(): Observable<Blob> {
+    return this.http.get(this.apiUrl + '/export', {
+      responseType: 'blob'
+    });
+  }
+
 }
