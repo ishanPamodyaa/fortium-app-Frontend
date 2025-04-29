@@ -14,6 +14,16 @@
 
     <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
         <div class="mb-3">
+            <label for="nic" class="form-label">National ID (NIC)</label>
+            <input type="text" class="form-control" id="nic" formControlName="nic"
+                [ngClass]="{'is-invalid': submitted && f['nic'].errors}">
+            <div *ngIf="submitted && f['nic'].errors" class="invalid-feedback">
+                <div *ngIf="f['nic'].errors['required']">NIC is required</div>
+                <div *ngIf="f['nic'].errors['pattern']">NIC must be either a 12-digit number or a 9-digit number followed by 'V' or 'v'</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
             <label for="name" class="form-label">Name</label>
             <input type="text" class="form-control" id="name" formControlName="name"
                 [ngClass]="{'is-invalid': submitted && f['name'].errors}">
